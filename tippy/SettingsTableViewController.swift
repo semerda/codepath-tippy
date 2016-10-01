@@ -19,8 +19,8 @@ class SettingsTableViewController: UITableViewController, UIPickerViewDataSource
     }
     */
 
-    @IBOutlet weak var tipPicker: UIPickerView!
-    @IBOutlet weak var tipCustomField: UITextField!
+    @IBOutlet weak var tipPickerView: UIPickerView!
+    @IBOutlet weak var tipCustomTextField: UITextField!
     @IBOutlet weak var localeCurrencyLabel: UILabel!
     
     let pickerData = ["10%", "15%", "18%", "20%", "25%", "Custom"]
@@ -30,8 +30,9 @@ class SettingsTableViewController: UITableViewController, UIPickerViewDataSource
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tipPicker.dataSource = self
-        tipPicker.delegate = self
+        tipPickerView.dataSource = self
+        tipPickerView.delegate = self
+        tipCustomTextField.delegate = self
         
         navigationController?.navigationBar.backgroundColor = UIColor.white
         
@@ -57,9 +58,9 @@ class SettingsTableViewController: UITableViewController, UIPickerViewDataSource
         view.endEditing(true);
     }
     
-    @IBAction func customTipAmount(_ sender: AnyObject) {
-        print("customTipAmount")
-        tipPicker.selectRow(pickerData.count-1, inComponent: 0, animated: true)
+    private func textFieldDidBeginEditing(textField: UITextField) -> Bool {
+        tipPickerView.selectRow(pickerData.count-1, inComponent: 0, animated: true)
+        return true
     }
     
     // MARK - Delegates and data sources
@@ -83,7 +84,7 @@ class SettingsTableViewController: UITableViewController, UIPickerViewDataSource
             tipText = ""
         } else {
             tipAmount = Int(tipText)!
-            tipCustomField.text = ""
+            tipCustomTextField.text = ""
         }
         //tipSelectedField.text = tipText
     }
@@ -98,7 +99,7 @@ class SettingsTableViewController: UITableViewController, UIPickerViewDataSource
     
     @IBAction func saveSettings(_ sender: AnyObject) {
         let defaults = UserDefaults.standard
-        defaults.set(((tipCustomField.text?.isEmpty)! ? tipAmount : Double(tipCustomField.text!)), forKey: "tippy_tip_value")
+        defaults.set(((tipCustomTextField.text?.isEmpty)! ? tipAmount : Double(tipCustomTextField.text!)), forKey: "tippy_tip_value")
         defaults.synchronize()
         
         _ = self.navigationController?.popViewController(animated: true) // note _ = since this method returns bool and we dont want to do anyting with it otherwise it say unused
@@ -108,10 +109,10 @@ class SettingsTableViewController: UITableViewController, UIPickerViewDataSource
         let defaults = UserDefaults.standard
         tipAmount = defaults.object(forKey: "tippy_tip_value") as! Int
         if (pickerDataPerc.contains(tipAmount)) {
-            tipPicker.selectRow(pickerDataPerc.index(of: tipAmount)!, inComponent: 0, animated: true)
+            tipPickerView.selectRow(pickerDataPerc.index(of: tipAmount)!, inComponent: 0, animated: true)
         } else {
-            tipPicker.selectRow(pickerData.count-1, inComponent: 0, animated: true)
-            tipCustomField.text = String(format: "%@", (defaults.object(forKey: "tippy_tip_value") as! CVarArg))
+            tipPickerView.selectRow(pickerData.count-1, inComponent: 0, animated: true)
+            tipCustomTextField.text = String(format: "%@", (defaults.object(forKey: "tippy_tip_value") as! CVarArg))
         }
         
         //print(defaults.object(forKey: "tippy_tip_value"))

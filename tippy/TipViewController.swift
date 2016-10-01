@@ -90,17 +90,18 @@ class TipViewController: UIViewController, UITextFieldDelegate {
     
     func calculateTip() {
         let bill = Double(billField.text!) ?? 0
+        
+        let tip = bill * tipPercentage
+        let total = bill + tip
+        
+        // Use device's locale currency
+        let locale = Locale.current
+        let currencySymbol = locale.currencySymbol!
+        
+        tipLabel.text = String.localizedStringWithFormat("%@%.2f", currencySymbol, tip)
+        totalLabel.text = String.localizedStringWithFormat("%@%.2f", currencySymbol, total)
+        
         if (bill > 0) {
-            let tip = bill * tipPercentage
-            let total = bill + tip
-            
-            // Use device's locale currency
-            let locale = Locale.current
-            let currencySymbol = locale.currencySymbol!
-            
-            tipLabel.text = String.localizedStringWithFormat("%@%.2f", currencySymbol, tip)
-            totalLabel.text = String.localizedStringWithFormat("%@%.2f", currencySymbol, total)
-            
             // Remember the bill so when we restart the app load the last value
             let defaults = UserDefaults.standard
             defaults.set(NSDate(), forKey: "tippy_bill_dt")
