@@ -28,8 +28,6 @@ Video Walkthrough:
 
 <img src='https://github.com/semerda/codepath-tippy/blob/master/assets/tippy-anim.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-Screenshots of the implemented prework:
-
 ## Notes
 
 Wow, this was interesting.. I didn't expect Swift3 to have this many suprises along the way! Interesting to see the shift from Objective-C to Swift and the many changes across different versions of Swift.
