@@ -26,7 +26,7 @@ The following **optional** features are implemented:
 
 Video Walkthrough:
 
-<img src='' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/semerda/codepath-tippy/blob/master/assets/tippy-anim.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 Screenshots of the implemented prework:
 
